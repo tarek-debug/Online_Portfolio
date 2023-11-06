@@ -104,6 +104,42 @@ graph TD
 ```
 edit_pages.py:
 
+```mermaid
+graph LR
+    subgraph Endpoints
+        AddOrUpdateSentence(Add/Update Sentence) -->|Write| DB[(MongoDB)]
+        DeleteSentence(Delete Sentence) -->|Write| DB
+        AddBar(Add Bar) -->|Write| DB
+        EditBar(Edit Bar) -->|Write| DB
+        RemoveBar(Remove Bar) -->|Write| DB
+        EditAbout(Edit About) -->|Write| DB
+        EditAboutMePhoto(Edit About Me Photo) -->|Write| DB
+        EditResume(Edit Resume) -->|Write| DB
+        DownloadResume(Download Resume) -->|Read| DB
+        EditAcademicTable(Edit Academic Table) -->|Write| DB
+        EditPersonalTable(Edit Personal Table) -->|Write| DB
+        EditStoryWritingTable(Edit Story Writing Table) -->|Write| DB
+        EditGameDevTable(Edit Game Dev Table) -->|Write| DB
+        EditHome(Edit Home) -->|Write| DB
+        NewContact(New Contact) -->|Write| DB
+        DeleteContact(Delete Contact) -->|Write| DB
+        EditPersonalProjects(Edit Personal Projects) -->|Write| DB
+        EditAcademicPageText(Edit Academic Page Text) -->|Write| DB
+        EditPersonalProjectsPageText(Edit Personal Projects Page Text) -->|Write| DB
+        EditGameDevPageText(Edit Game Dev Page Text) -->|Write| DB
+        EditOutdoorPageText(Edit Outdoor Page Text) -->|Write| DB
+        EditStoriesMainPageText(Edit Stories Main Page Text) -->|Write| DB
+        HandleMapMarker(Handle Map Marker) -->|Write| DB
+        EditImgAttribTable(Edit Img Attrib Table) -->|Write| DB
+        EditAcademicProjectsPages(Edit Academic Projects Pages) -->|Write| DB
+        EditPersonalProjectsPages(Edit Personal Projects Pages) -->|Write| DB
+        EditGameDevMainPages(Edit Game Dev Main Pages) -->|Write| DB
+        EditGamesPages(Edit Games Pages) -->|Write| DB
+    end
+
+    style DB fill:#f96,stroke:#333,stroke-width:2px
+
+```
 
 ### Prerequisites
 
