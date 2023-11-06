@@ -1,0 +1,290 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+    <!-- Other meta tags and title -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/exploring_the_outdoor.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/edit_exploring_outdoor_page.js') }}"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    
+
+{% if logged_in %} 
+{% if view_mode == 'guest' %}
+<nav>
+  <!-- navigation tabs for logged-in users -->
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('home', view_mode='guest') }}">Home</a>
+    <a href="{{ url_for('about_me', view_mode='guest') }}">About me</a>
+    <div class="dropdown">
+      <button class="dropbtn">Projects</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('academic', view_mode='guest') }}">Academic</a>
+        <a href="{{ url_for('personal', view_mode='guest') }}">Personal</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Hobbies</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('story_writing', view_mode='guest') }}">Story Writing</a>
+        <a href="{{ url_for('exploring_the_outdoor', view_mode='guest') }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('game_development', view_mode='guest') }}">Game Development</a>
+      </div>
+    </div>
+    <a href="{{ url_for('contact', view_mode='guest') }}">Contact</a>
+    <a href="{{ url_for('exploring_the_outdoor', view_mode='admin') }}">Admin View</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+
+  </div>
+</nav>
+{% else %}
+<nav>
+  <!-- navigation tabs for logged-in users -->
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('home', view_mode='admin') }}">Home</a>
+    <a href="{{ url_for('about_me', view_mode='admin') }}">About me</a>
+    <div class="dropdown">
+      <button class="dropbtn">Projects</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('academic', view_mode='admin') }}">Academic</a>
+        <a href="{{ url_for('personal', view_mode='admin') }}">Personal</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Hobbies</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('story_writing', view_mode='admin') }}">Story Writing</a>
+        <a href="{{ url_for('exploring_the_outdoor', view_mode='admin') }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('game_development', view_mode='admin') }}">Game Development</a>
+      </div>
+    </div>
+    <a href="{{ url_for('contact', view_mode='admin') }}">Contact</a>
+    <a href="{{ url_for('exploring_the_outdoor', view_mode='guest') }}">Guest View</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+  </div>
+</nav>
+{% endif %}
+{% else %}
+<nav>
+  <!-- navigation tabs for logged-in users -->
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('home', view_mode='admin') }}">Home</a>
+    <a href="{{ url_for('about_me', view_mode='admin') }}">About me</a>
+    <div class="dropdown">
+      <button class="dropbtn">Projects</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('academic', view_mode='admin') }}">Academic</a>
+        <a href="{{ url_for('personal', view_mode='admin') }}">Personal</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Hobbies</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('story_writing', view_mode='admin') }}">Story Writing</a>
+        <a href="{{ url_for('exploring_the_outdoor', view_mode='admin') }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('game_development', view_mode='admin') }}">Game Development</a>
+      </div>
+    </div>
+    <a href="{{ url_for('contact', view_mode='admin') }}">Contact</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+  </div>
+</nav>
+{% endif %} 
+
+
+{% if logged_in and view_mode == 'admin' %}
+    <nav>
+        <div class="editable-container">
+            <div style="text-align: center;">
+                <h1 style="margin: 4vh;" id="outdoor_title"> {{ outdoor_title }}
+                </h1>
+                <hr style="width:40% ; margin: 2vh auto;" class="w3-opacity">
+              </div>
+              <div class="introduction">
+                <h5 class="w3-padding-16 w3-text-light-grey" id="outdoor_introduction">
+                  {{ outdoor_introduction }}
+                </h5>
+              </div>
+        </div>
+        <div class="map-title-container">
+            <h2 class="map-title" ondblclick="showMapToolbar()" id = 'map_title'>{{ map_title }}</h2>
+            <hr style="width:200px" class="w3-opacity">
+          </div>
+          <div id="map"></div>
+          <div id="map_toolbar" class="map_toolbar">
+            <button onclick="addHikedPlace()">Add hiked place</button>
+            <button onclick="removeHikedPlace()">Remove hiked place</button>
+            <button onclick="addPlaceToHike()">Add place to hike</button>
+            <button onclick="removePlaceToHike()">Remove place to hike</button>
+            <div id="markerForm" style="display: none;">
+              <label for="name">Name:</label>
+              <input type="text" id="name">
+              <label for="latitude">Latitude:</label>
+              <input type="text" id="latitude">
+              <label for="longitude">Longitude:</label>
+              <input type="text" id="longitude">
+              <button onclick="confirmMarker()">Confirm</button>
+              <button onclick="cancelMarker()">Cancel</button>
+            </div>
+            <button onclick="hideMapToolbar()">Hide toolbar</button>
+          </div>          
+        
+          <script>
+            var greenIcon = new L.Icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+
+            var redIcon = new L.Icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+
+            var map = L.map('map').setView([0, 0], 2);  // center position and zoom
+        
+            // load a tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                maxZoom: 19,
+            }).addTo(map);
+        
+            // assuming your coordinates are in an array of arrays
+            var hikedLocations = {{ hiked_locations|tojson }};
+            var desiredHikeLocations = {{ desired_hike_locations|tojson }};
+        
+            // add markers for hiked locations
+            hikedLocations.forEach(function(location) {
+                L.marker(location.coordinates, {icon: greenIcon})
+                    .bindPopup('<b>' + location.name + '</b><br>Hiked location')
+                    .addTo(map);
+            });
+        
+            // add markers for desired hike locations
+            desiredHikeLocations.forEach(function(location) {
+                L.marker(location.coordinates, {icon: redIcon})
+                    .bindPopup('<b>' + location.name + '</b><br>Desired hike')
+                    .addTo(map);
+            });
+
+            var legend = L.control({position: 'bottomright'});
+
+                      legend.onAdd = function (map) {
+              var div = L.DomUtil.create('div', 'info legend');
+              div.innerHTML = [
+                  '<strong class="legend-title">Categories</strong>',
+                  '<br><i class="legend-color-bar" style="background:green;"></i><span class="legend-item">Hiked location</span>',
+                  '<br><i class="legend-color-bar" style="background:red;"></i><span class="legend-item">Desired hike</span>'
+              ].join('');
+              return div;
+          };
+
+            legend.addTo(map);
+
+        </script>
+        
+          
+          <script src="static/js/map_tools.js"> </script>
+
+
+
+
+    </nav>
+{% else %}
+    <nav>
+      <div style="text-align: center;">
+        <h1 style="margin: 4vh;" id="outdoor_title"> {{ outdoor_title }}
+        </h1>
+        <hr style="width:40% ; margin: 2vh auto;" class="w3-opacity">
+      </div>
+      <div class="introduction">
+        <h5 class="w3-padding-16 w3-text-light-grey" id="outdoor_introduction">
+          {{ outdoor_introduction }}
+        </h5>
+      </div>
+        <div class="map-title-container">
+            <h2 class="map-title" id="map_title"> {{ map_title }} </h2>
+            <hr style=" width:200px" class="w3-opacity">
+          </div>
+          <div id="map"></div>
+
+          <script>
+            var greenIcon = new L.Icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+
+            var redIcon = new L.Icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41]
+            });
+
+            var map = L.map('map').setView([0, 0], 2);  // center position and zoom
+        
+            // load a tile layer
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            {
+                maxZoom: 19,
+            }).addTo(map);
+        
+            // assuming your coordinates are in an array of arrays
+            var hikedLocations = {{ hiked_locations|tojson }};
+            var desiredHikeLocations = {{ desired_hike_locations|tojson }};
+        
+            // add markers for hiked locations
+            hikedLocations.forEach(function(location) {
+                L.marker(location.coordinates, {icon: greenIcon})
+                    .bindPopup('<b>' + location.name + '</b><br>Hiked location')
+                    .addTo(map);
+            });
+        
+            // add markers for desired hike locations
+            desiredHikeLocations.forEach(function(location) {
+                L.marker(location.coordinates, {icon: redIcon})
+                    .bindPopup('<b>' + location.name + '</b><br>Desired hike')
+                    .addTo(map);
+            });
+
+            var legend = L.control({position: 'bottomright'});
+
+                      legend.onAdd = function (map) {
+              var div = L.DomUtil.create('div', 'info legend');
+              div.innerHTML = [
+                  '<strong class="legend-title">Categories</strong>',
+                  '<br><i class="legend-color-bar" style="background:green;"></i><span class="legend-item">Hiked location</span>',
+                  '<br><i class="legend-color-bar" style="background:red;"></i><span class="legend-item">Desired hike</span>'
+              ].join('');
+              return div;
+          };
+
+            legend.addTo(map);
+
+        </script>
+        
+                  
+                  
+    </nav>
+{% endif %}
+    
+
+
+{% endblock %}

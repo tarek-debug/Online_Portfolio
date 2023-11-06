@@ -1,0 +1,223 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <!-- Other meta tags and title -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/personal.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src = "static/js/edit_personal_text.js"></script> 
+    <script src = "static/js/table_to_list.js"></script> 
+
+{% if logged_in %} 
+{% if view_mode == 'guest' %}
+  <nav>
+    <!-- navigation tabs for logged-in users -->
+    <nav>
+      <!-- navigation tabs for logged-in users -->
+      <div class="topnav" id="myTopnav">
+        <a href="{{ url_for('home', view_mode='admin') }}">Home</a>
+        <a href="{{ url_for('about_me', view_mode='admin') }}">About me</a>
+        <div class="dropdown">
+          <button class="dropbtn">Projects</button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('academic', view_mode='admin') }}">Academic</a>
+            <a href="{{ url_for('personal', view_mode='admin') }}">Personal</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">Hobbies</button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('story_writing', view_mode='admin') }}">Story Writing</a>
+            <a href="{{ url_for('exploring_the_outdoor', view_mode='admin') }}">Exploring The Outdoor</a>
+            <a href="{{ url_for('game_development', view_mode='admin') }}">Game Development</a>
+          </div>
+        </div>
+        <a href="{{ url_for('contact', view_mode='admin') }}">Contact</a>
+        <a href="{{ url_for('personal', view_mode='guest') }}">Guest View</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+      </div>
+    </nav>
+{% else %}
+<nav>
+  <!-- navigation tabs for logged-in users -->
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('home', view_mode='admin') }}">Home</a>
+    <a href="{{ url_for('about_me', view_mode='admin') }}">About me</a>
+    <div class="dropdown">
+      <button class="dropbtn">Projects</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('academic', view_mode='admin') }}">Academic</a>
+        <a href="{{ url_for('personal', view_mode='admin') }}">Personal</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Hobbies</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('story_writing', view_mode='admin') }}">Story Writing</a>
+        <a href="{{ url_for('exploring_the_outdoor', view_mode='admin') }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('game_development', view_mode='admin') }}">Game Development</a>
+      </div>
+    </div>
+    <a href="{{ url_for('contact', view_mode='admin') }}">Contact</a>
+    <a href="{{ url_for('personal', view_mode='guest') }}">Guest View</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+  </div>
+</nav>
+{% endif %}
+{% else %}
+<nav>
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('home', view_mode=view_mode)}}">Home</a>
+    <a href="{{ url_for('about_me', view_mode=view_mode) }}">About me</a>
+    <div class="dropdown">
+      <button class="dropbtn">Projects</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('academic', view_mode=view_mode) }}">Academic</a>
+        <a href="{{ url_for('personal', view_mode=view_mode) }}">Personal</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Hobbies</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('story_writing', view_mode=view_mode) }}">Story Writing</a>
+        <a href="{{ url_for('exploring_the_outdoor', view_mode=view_mode) }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('game_development', view_mode=view_mode) }}">Game Development</a>
+      </div>
+    </div>
+    <a href="{{ url_for('contact', view_mode=view_mode) }}">Contact</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+  </div>
+</nav>
+{% endif %} 
+
+
+{% if logged_in and view_mode == 'admin' %}
+    <nav>
+        <div class="editable-container">
+            <div style="text-align: center;">
+                <h1 style="margin: 4vh;" id="personal_projects_main_title"> {{personal_projects_main_title }}
+                </h1>
+                <hr style="width:40% ; margin: 2vh auto;" class="w3-opacity">
+              </div>
+              
+              <div class="introduction">
+                <h5 class="w3-padding-16 w3-text-light-grey" id="personal_projects_main_intro">
+                  {{ personal_projects_main_intro }}
+                </h5>
+              </div>
+              
+              <div id="myTable">
+                <table class="table-class">
+                  <thead>
+                    <tr>
+                      {% for key in documents[0].keys() %}
+                        {% if key != '_id' %}
+                          <th>{{ key }}</th>
+                        {% endif %}
+                      {% endfor %}
+                    <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for document in documents %}
+                      <tr>
+                        {% for key, value in document.items() %}
+                          {% if key != '_id' %}
+                            {% if key == 'Image preview' %}
+                              <td class="image-cell">
+                                {% if value %}
+                                  <img src="{{ value }}" alt="Image preview" width="250" height="300">
+                                {% endif %}
+                                <br>
+                                <div class="image-actions">
+                                  <input type="file" name="image" class="image-input">
+                                </div>
+                              </td>
+                            {% else %}
+                              <td contenteditable="true">{{ value }}</td>
+                            {% endif %}
+                          {% endif %}
+                        {% endfor %}
+                        <td>
+                          <button class="delete-row">Delete</button>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                  
+                </table>     
+              </div>
+              
+  
+                <button id="add-row">Add Row</button>
+                <button id="save-changes">Save Changes</button>
+                <button id="cancel-changes">Cancel Changes</button>
+                
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                <script src = "static/js/edit_personal_table.js"></script> 
+
+
+  
+
+
+    </nav>
+{% else %}
+    <nav>
+        <div style="text-align: center;">
+          <h1 style="margin: 4vh;" id="personal_projects_main_title"> {{personal_projects_main_title }}
+            <hr style="width:40% ; margin: 2vh auto;" class="w3-opacity">
+            </h1>
+          </div>
+          
+          <div class="introduction">
+            <h5 class="w3-padding-16 w3-text-light-grey" id="personal_projects_main_intro">
+              {{ personal_projects_main_intro }}
+            </h5>
+          
+          </div>
+          <div id="myTable">
+            <table>
+              <thead>
+                <tr>
+                  {% for key in documents[0].keys() %}
+                    {% if key != '_id' %}
+                      <th>{{ key }}</th>
+                    {% endif %}
+                  {% endfor %}              
+                </tr>
+              </thead>
+              <tbody>
+                {% for document in documents %}
+                  <tr>
+                    {% for key, value in document.items() %}
+                      {% if key != '_id' %}
+                        {% if key == 'Image preview' %}
+                          <td class="image-cell">
+                            {% if value %}
+                              <img src="{{ value }}" alt="Image preview" width="250" height="300">
+                            {% endif %}
+                          </td>
+                          {% elif key == 'Source Code' %}
+                          <td>
+                              <a href="{{ 'http://' if '://' not in value else '' }}{{ value | e }}" target="_blank">{{ value | e }}</a>
+                          </td>  
+                        {% else %}
+                          <td>{{ value }}</td>
+                        {% endif %}
+                      {% endif %}
+                    {% endfor %}
+                {% endfor %}
+              </tbody>
+              
+            </table>     
+          </div>
+          <script src = "static/js/sort_table.js"></script>
+
+    </nav>
+{% endif %}
+
+
+
+{% endblock %}

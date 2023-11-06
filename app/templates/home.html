@@ -1,0 +1,203 @@
+{% extends 'layout.html' %}
+
+
+
+{% block body %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <!-- Load d3.js -->
+  <script src="https://d3js.org/d3.v4.js"></script>
+  
+  <!-- Function for radial charts -->
+  <script src="https://cdn.jsdelivr.net/gh/holtzy/D3-graph-gallery@master/LIB/d3-scale-radial.js"></script>
+
+  {% if logged_in %} 
+
+    {% if view_mode == 'guest' %}
+      <nav>
+        <!-- navigation tabs for logged-in users -->
+        <div class="topnav" id="myTopnav">
+          <a href="{{ url_for('home', view_mode='guest') }}">Home</a>
+          <a href="{{ url_for('about_me', view_mode='guest') }}">About me</a>
+          <div class="dropdown">
+            <button class="dropbtn">Projects</button>
+            <div class="dropdown-content">
+              <a href="{{ url_for('academic', view_mode='guest') }}">Academic</a>
+              <a href="{{ url_for('personal', view_mode='guest') }}">Personal</a>
+            </div>
+          </div>
+          <div class="dropdown">
+            <button class="dropbtn">Hobbies</button>
+            <div class="dropdown-content">
+              <a href="{{ url_for('story_writing', view_mode='guest') }}">Story Writing</a>
+              <a href="{{ url_for('exploring_the_outdoor', view_mode='guest') }}">Exploring The Outdoor</a>
+              <a href="{{ url_for('game_development', view_mode='guest') }}">Game Development</a>
+            </div>
+          </div>
+          <a href="{{ url_for('contact', view_mode='guest') }}">Contact</a>
+          <a href="{{ url_for('home', view_mode='admin') }}">Admin View</a>
+          <a href="{{ url_for('logout') }}">Logout</a>
+          <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+
+        </div>
+      </nav>
+    {% else %}
+    <nav>
+      <!-- navigation tabs for logged-in users -->
+      <div class="topnav" id="myTopnav">
+        <a href="{{ url_for('home', view_mode='admin') }}">Home</a>
+        <a href="{{ url_for('about_me', view_mode='admin') }}">About me</a>
+        <div class="dropdown">
+          <button class="dropbtn">Projects</button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('academic', view_mode='admin') }}">Academic</a>
+            <a href="{{ url_for('personal', view_mode='admin') }}">Personal</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">Hobbies</button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('story_writing', view_mode='admin') }}">Story Writing</a>
+            <a href="{{ url_for('exploring_the_outdoor', view_mode='admin') }}">Exploring The Outdoor</a>
+            <a href="{{ url_for('game_development', view_mode='admin') }}">Game Development</a>
+          </div>
+        </div>
+        <a href="{{ url_for('contact', view_mode='admin') }}">Contact</a>
+        <a href="{{ url_for('home', view_mode='guest') }}">Guest View</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+      </div>
+    </nav>
+    {% endif %}
+  {% else %}
+    <nav>
+      <div class="topnav" id="myTopnav">
+        <a href="{{ url_for('home', view_mode=view_mode)}}">Home</a>
+        <a href="{{ url_for('about_me', view_mode=view_mode) }}">About me</a>
+        <div class="dropdown">
+          <button class="dropbtn">Projects</button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('academic', view_mode=view_mode) }}">Academic</a>
+            <a href="{{ url_for('personal', view_mode=view_mode) }}">Personal</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">Hobbies</button>
+          <div class="dropdown-content">
+            <a href="{{ url_for('story_writing', view_mode=view_mode) }}">Story Writing</a>
+            <a href="{{ url_for('exploring_the_outdoor', view_mode=view_mode) }}">Exploring The Outdoor</a>
+            <a href="{{ url_for('game_development', view_mode=view_mode) }}">Game Development</a>
+          </div>
+        </div>
+        <a href="{{ url_for('contact', view_mode=view_mode) }}">Contact</a>
+        <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+      </div>
+    </nav>
+  {% endif %} 
+  <nav>
+
+  <div class="container">
+    <p id="info"></p>
+    <a class="scroll-button" onclick="document.getElementById('container-middle').scrollIntoView({ behavior: 'smooth' })">▼▼▼ </a>
+  </div>
+
+  <script src="/static/js/home_intro_sentences.js"></script>
+
+  {% if logged_in and view_mode == 'admin' %}
+  <script src="/static/js/submit_sentence.js"></script>
+  <script src="/static/js/delete_sentence.js"></script>
+  <form id="sentenceForm">
+    <input type="text" id="newSentence" name="newSentence" placeholder="Enter new or updated sentence">
+    <button type="button" onclick="submitSentence()">Submit</button>
+  </form>
+  <div class="column" id="deleteSentenceContainer">
+    <form id="deleteSentenceForm">
+      <label for="sentence">Type the sentence to delete:</label>
+      <input type="text" id="sentence" name="sentence" placeholder="Enter the sentence" required>
+      <button type="button" onclick="deleteSentenceFromDatabase()">Delete Sentence</button>
+    </form>
+  </div>
+  {% endif %}
+
+  
+
+      <div class="container-middle" id="container-middle">
+        <section class="wrapper">
+          <div id="stars"></div>
+          <div id="stars2"></div>
+          <div id="stars3"></div>
+          <div class="highlight-title-container">
+            <h2 class="highlight-title" style=" text-align: center;">Highlights
+              <hr style="width:160px" class="w3-opacity">
+            </h2>
+          </div>
+          <script src="/static/js/home_circular_barplot.js"></script>
+
+          <div class="highlight-container">
+            <div id="my_dataviz"></div>
+            <div class="skill-cloud">
+              <span class="skill-tag">Machine Learning</span>
+              <span class="skill-tag">Cybersecurity</span>
+              <span class="skill-tag">Database Development</span>
+              <span class="skill-tag">Game Development</span>
+              <span class="skill-tag">Story Writing</span>
+  
+              <!-- Add more skill tags as needed -->
+            </div>
+
+            <div class="skill-details" style="display: none;">
+              <h3 class="skill-title"></h3>
+              <p class="skill-description"></p>
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="timeline-icon"></div>
+                  <div class="timeline-content"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="attribution-container">
+            <a href="{{ url_for('image_attribution')}} " class="attribution-icon">
+              <img src="static/img/album.png" alt="Image Attribution"> <!-- Add the img tag here -->
+            </a>
+            <div class="attribution-tooltip">Image Attribution</div>
+          </div>
+        </div>
+      </section>
+
+
+
+      <script src="/static/js/home_highlights.js"></script>
+      {% if logged_in and view_mode == 'admin' %}
+      <script src="/static/js/edit_home_circular_barplot.js"></script>
+
+      <div id="toolbar">
+        <button onclick="document.getElementById('inputFields').style.display = 'block'; document.getElementById('editFields').style.display = 'none'; document.getElementById('removeFields').style.display = 'none';">Add bar</button>
+        <button onclick="document.getElementById('inputFields').style.display = 'none'; document.getElementById('editFields').style.display = 'block'; document.getElementById('removeFields').style.display = 'none';">Edit bar</button>
+        <button onclick="document.getElementById('inputFields').style.display = 'none'; document.getElementById('editFields').style.display = 'none'; document.getElementById('removeFields').style.display = 'block';">Remove bar</button>
+
+      </div>
+          <div id="inputFields"  style="display: none; color: #000;">
+            Category: <input type="text" id="category"><br>
+            OuterValue: <input type="text" id="value"><br>
+            InnerValue: <input type="text" id="innerValue"><br>
+            <button onclick="addBar(document.getElementById('category').value, document.getElementById('value').value, document.getElementById('innerValue').value)">Submit</button>
+        </div>
+
+        <div id="editFields" style="display: none; color: #000;">
+          Category: <input type="text" id="editCategory"><br>
+          Outer Value: <input type="text" id="editValue"><br> <!-- Updated the ID here -->
+          InnerValue: <input type="text" id="editInnerValue"><br>
+          <button onclick="editBar(document.getElementById('editCategory').value, document.getElementById('editValue').value, document.getElementById('editInnerValue').value)">Submit</button>
+      </div>
+      
+
+        <div id="removeFields" style="display: none; color: #000;">
+            Category: <input type="text" id="removeCategory"><br>
+            <button onclick="removeBar(document.getElementById('removeCategory').value)">Remove</button>
+        </div>      
+      {% endif %}
+
+</nav>
+{% endblock %}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/fontawesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto%20Serif">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src = "static/js/navbar_toggle_view.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <title>Tarek's Online Portfolio</title>
+
+</head>
+
+<body>
+
+    {% block body %}{% endblock %}
+    
+    <script>
+        // Check if the current URL has a view_mode query parameter
+        if (window.location.search.includes('view_mode=guest')) {
+            // Remove the query parameter and update the URL
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    </script>
+
+
+
+</body>
+
+</html>

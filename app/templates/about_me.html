@@ -1,0 +1,287 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+
+    <!-- Other meta tags and title -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/about_me.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/static/js/edit_texts.js"></script>
+
+    <script src="/static/js/change_about_me_photo.js"></script>
+    <script src="/static/js/resume_toolbar.js"></script>
+
+{% if logged_in %} 
+{% if view_mode == 'guest' %}
+  <nav>
+    <!-- navigation tabs for logged-in users -->
+    <div class="topnav" id="myTopnav">
+      <a href="{{ url_for('home', view_mode='guest') }}">Home</a>
+      <a href="{{ url_for('about_me', view_mode='guest') }}">About me</a>
+      <div class="dropdown">
+        <button class="dropbtn">Projects</button>
+        <div class="dropdown-content">
+          <a href="{{ url_for('academic', view_mode='guest') }}">Academic</a>
+          <a href="{{ url_for('personal', view_mode='guest') }}">Personal</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">Hobbies</button>
+        <div class="dropdown-content">
+          <a href="{{ url_for('story_writing', view_mode='guest') }}">Story Writing</a>
+          <a href="{{ url_for('exploring_the_outdoor', view_mode='guest') }}">Exploring The Outdoor</a>
+          <a href="{{ url_for('game_development', view_mode='guest') }}">Game Development</a>
+        </div>
+      </div>
+      <a href="{{ url_for('contact', view_mode='guest') }}">Contact</a>
+      <a href="{{ url_for('about_me', view_mode='admin') }}">Admin View</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+      <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+    </div>
+  </nav>
+{% else %}
+  <nav>
+    <!-- navigation tabs for logged-in users -->
+    <div class="topnav" id="myTopnav">
+      <a href="{{ url_for('home', view_mode='admin') }}">Home</a>
+      <a href="{{ url_for('about_me', view_mode='admin') }}">About me</a>
+      <div class="dropdown">
+        <button class="dropbtn">Projects</button>
+        <div class="dropdown-content">
+          <a href="{{ url_for('academic', view_mode='admin') }}">Academic</a>
+          <a href="{{ url_for('personal', view_mode='admin') }}">Personal</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">Hobbies</button>
+        <div class="dropdown-content">
+          <a href="{{ url_for('story_writing', view_mode='admin') }}">Story Writing</a>
+          <a href="{{ url_for('exploring_the_outdoor', view_mode='admin') }}">Exploring The Outdoor</a>
+          <a href="{{ url_for('game_development', view_mode='admin') }}">Game Development</a>
+        </div>
+      </div>
+      <a href="{{ url_for('contact', view_mode='admin') }}">Contact</a>
+      <a href="{{ url_for('about_me', view_mode='guest') }}">Guest View</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+      <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+    </div>
+  </nav>
+{% endif %}
+{% else %}
+<nav>
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('home', view_mode=view_mode)}}">Home</a>
+    <a href="{{ url_for('about_me', view_mode=view_mode) }}">About me</a>
+    <div class="dropdown">
+      <button class="dropbtn">Projects</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('academic', view_mode=view_mode) }}">Academic</a>
+        <a href="{{ url_for('personal', view_mode=view_mode) }}">Personal</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Hobbies</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('story_writing', view_mode=view_mode) }}">Story Writing</a>
+        <a href="{{ url_for('exploring_the_outdoor', view_mode=view_mode) }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('game_development', view_mode=view_mode) }}">Game Development</a>
+      </div>
+    </div>
+    <a href="{{ url_for('contact', view_mode=view_mode) }}">Contact</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+  </div>
+</nav>
+{% endif %} 
+
+{% if logged_in and view_mode == 'admin' %}
+
+<!-- About Section -->
+<div class="editable-container w3-content w3-justify w3-text-grey w3-padding-64" id="about">
+  <!-- Editable content for admins -->
+    <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
+      <h1 class="w3-jumbo" id="about_me_title">{{ about_me_title }}</h1>
+      <p></p>
+      <img id="profile_photo" src="{{ profile_photo }}" alt="My Picture" class="w3-image" width="992" height="1108">
+      <input type="file" id="photoInput" name="profile_photo" style="display: none;">
+         
+      <button id="changePhotoBtn">Change Photo</button>
+      <button id="savePhotoBtn">Save Photo</button>
+      <button id="cancelPhotoBtn" style="display: none;">Cancel</button>
+    
+    </header>
+    <input type="file" name="photo" id="photo-upload" style="display: none;">
+    <div id="photo-container"></div>
+  <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
+    <h2 class="w3-text-light-grey" id="about_text_title">{{ about_text_title }}</h2>
+    <hr style="width:200px" class="w3-opacity">
+    <p id="about_me_intro" >{{ about_me_intro }}</p>
+    <h3 class="w3-padding-16 w3-text-light-grey" id="technical_skills">{{ technical_skills }}</h3>
+    <p class="w3-wide" id="softwares" >{{ softwares }}</p>
+    <p id="softwares_text"> {{ softwares_text }} </p>
+    <p class="w3-wide" id="coding_lang" >{{ coding_lang }}</p>
+    <p id="coding_lang_text" >{{ coding_lang_text }}</p>
+    <p class="w3-wide" id="frameworks" >{{ frameworks }}</p>
+    <p id="frameworks_text">{{ frameworks_text }}</p>
+    <div class="w3-white">
+    </div><br>
+
+    <h3 class="w3-padding-16 w3-text-light-grey" id="leadership_skills">{{ leadership_skills }}</h3>
+    <p class="w3-wide" id="quest_leader" >{{ quest_leader }}</p>
+    <p id="quest_description">{{quest_description}}</p>
+    <div class="w3-white">
+    </div>
+    <p class="w3-wide"  id="resident_advisor">{{resident_advisor}}</p>
+    <p id="resident_advisor_description"> {{resident_advisor_description}}
+
+    </p>
+    <div class="w3-white">
+    </div>
+    <br>
+    <h3 class="w3-padding-16 w3-text-light-grey" id="experience">{{ experience }}</h3>
+    <p class="w3-wide" id = "experience_table_title">{{ experience_table_title }}</p>
+
+    <div class="w3-row w3-center w3-padding-16 w3-section w3-light-grey">
+      <div class="w3-quarter w3-section">
+        <span class="w3-xlarge" id="count_1">{{ count_1 }}</span><br>
+        <span id="exp_1">{{ exp_1 }}</span>
+        </div>
+      <div class="w3-quarter w3-section">
+        <span class="w3-xlarge" id="count_2">{{ count_2 }}</span><br>
+        <span id="exp_2">{{ exp_2 }}</span>
+      </div>
+      <div class="w3-quarter w3-section">
+        <span class="w3-xlarge" id="count_3">{{ count_3 }}</span><br>
+        <span id="exp_3">{{ exp_3 }}</span>
+      </div>
+    </div>
+    <h3 class="w3-padding-16 w3-text-light-grey" id="aspirations">{{ aspirations }}</h3>
+    <p class="w3-wide" id="asp1">{{ asp1 }}</p>
+    <div class="w3-white">
+    </div>
+    <p class="w3-wide" id="asp2">{{ asp2 }}</p>
+    <div class="w3-white">
+    </div>
+    <p class="w3-wide" id="asp3">{{ asp3 }}</p>
+    <div class="w3-white">
+    </div>
+    <p class="w3-wide" id="asp4">{{ asp4 }}</p>
+    <div class="w3-white">
+    </div><br>
+
+  </div>
+  <button id="uploadResumeBtn" class="w3-button w3-light-grey w3-padding-large w3-section">
+    <i class="fa fa-upload"></i> Upload New Resume
+  </button>
+  
+  <button id="saveChangesBtn" class="w3-button w3-green w3-padding-large w3-section">
+    <i class="fa fa-save"></i> Save Changes
+  </button>
+  
+  <button id="cancelBtn" class="w3-button w3-red w3-padding-large w3-section">
+    <i class="fa fa-times"></i> Cancel
+  </button>
+  
+  <a id="resumeLink" href="#" download class="w3-button w3-blue w3-padding-large w3-section">
+    <i class="fa fa-download"></i> Download Resume
+  </a>
+  
+  <input type="file" id="resumeInput" style="display: none;">
+  
+
+
+
+</div>
+
+
+
+
+{% else %}
+
+
+<div class=" w3-content w3-justify w3-text-grey w3-padding-64" id="about">
+  <!-- Editable content for admins -->
+  <form action="/edit_about" method="POST" enctype="multipart/form-data">
+    <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
+      <h1 class="w3-jumbo" id="about_me_title">{{ about_me_title }}</h1>
+      <p></p>
+      <img id="profile_photo" src="{{ profile_photo }}" alt="My Picture" class="w3-image" width="992" height="1108">
+    </header>
+    <input type="file" name="photo" id="photo-upload" style="display: none;">
+    <div id="photo-container"></div>
+  </form>
+  <div class="w3-content w3-justify w3-text-grey w3-padding-64" id="about">
+    <h2 class="w3-text-light-grey" id="about_me_title">{{ about_text_title }}</h2>
+    <hr style="width:200px" class="w3-opacity">
+    <p id="about_me_intro" >{{ about_me_intro }}</p>
+    <h3 class="w3-padding-16 w3-text-light-grey" id="technical_skills">{{ technical_skills }}</h3>
+    <p class="w3-wide" id="softwares" >{{ softwares }}</p>
+    <p id="softwares_text"> {{ softwares_text }} </p>
+    <p class="w3-wide" id="coding_lang" >{{ coding_lang }}</p>
+    <p id="coding_lang_text" >{{ coding_lang_text }}</p>
+    <p class="w3-wide" id="frameworks" >{{ frameworks }}</p>
+    <p id="frameworks_text">{{ frameworks_text }}</p>
+    <div class="w3-white">
+  </div><br>
+
+  <h3 class="w3-padding-16 w3-text-light-grey" id="leadership_skills">{{ leadership_skills }}</h3>
+  <p class="w3-wide" id="quest_leader" >{{ quest_leader }}</p>
+  <p id="quest_description">{{quest_description}}</p>
+  <div class="w3-white">
+  </div>
+  <p class="w3-wide"  id="resident_advisor">{{resident_advisor}}</p>
+  <p id="resident_advisor_description"> {{resident_advisor_description}}
+
+  </p>
+  <div class="w3-white">
+  </div>
+  <br>
+    <h3 class="w3-padding-16 w3-text-light-grey" id="experience">{{ experience }}</h3>
+    <p class="w3-wide" id = "experience_table_title">{{ experience_table_title }}</p>
+
+    <div class="w3-row w3-center w3-padding-16 w3-section w3-light-grey">
+      <div class="w3-quarter w3-section">
+        <span class="w3-xlarge" id="count_1">{{ count_1 }}</span><br>
+        <span id="exp_1">{{ exp_1 }}</span>
+        </div>
+      <div class="w3-quarter w3-section">
+        <span class="w3-xlarge" id="count_2">{{ count_2 }}</span><br>
+        <span id="exp_2">{{ exp_2 }}</span>
+      </div>
+      <div class="w3-quarter w3-section">
+        <span class="w3-xlarge" id="count_3">{{ count_3 }}</span><br>
+        <span id="exp_3">{{ exp_3 }}</span>
+      </div>
+    </div>
+    <h3 class="w3-padding-16 w3-text-light-grey" id="aspirations">{{ aspirations }}</h3>
+    <p class="w3-wide" id="asp1">{{ asp1 }}</p>
+    <div class="w3-white">
+    </div>
+    <p class="w3-wide" id="asp2">{{ asp2 }}</p>
+    <div class="w3-white">
+    </div>
+    <p class="w3-wide" id="asp3">{{ asp3 }}</p>
+    <div class="w3-white">
+    </div>
+    <p class="w3-wide" id="asp4">{{ asp4 }}</p>
+    <div class="w3-white">
+    </div><br>
+
+  </div>
+
+  <a id="resumeLink" href="#" download class="w3-button w3-light-grey w3-padding-large w3-section">
+    <i class="fa fa-download"></i> Download Resume
+  </a>
+  <!-- Footer -->
+<footer class="w3-content w3-padding-64 w3-text-grey w3-xlarge">
+
+<!-- End footer -->
+</footer>
+</div>
+
+{% endif %}
+
+
+    
+
+
+{% endblock %}

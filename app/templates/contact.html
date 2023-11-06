@@ -1,0 +1,168 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+    <!-- Other meta tags and title -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/contact.css') }}">
+
+
+{% if logged_in %} 
+{% if view_mode == 'guest' %}
+<nav>
+  <!-- navigation tabs for logged-in users -->
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('home', view_mode='guest') }}">Home</a>
+    <a href="{{ url_for('about_me', view_mode='guest') }}">About me</a>
+    <div class="dropdown">
+      <button class="dropbtn">Projects</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('academic', view_mode='guest') }}">Academic</a>
+        <a href="{{ url_for('personal', view_mode='guest') }}">Personal</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Hobbies</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('story_writing', view_mode='guest') }}">Story Writing</a>
+        <a href="{{ url_for('exploring_the_outdoor', view_mode='guest') }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('game_development', view_mode='guest') }}">Game Development</a>
+      </div>
+    </div>
+    <a href="{{ url_for('contact', view_mode='guest') }}">Contact</a>
+    <a href="{{ url_for('contact', view_mode='admin') }}">Admin View</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+
+  </div>
+</nav>
+{% else %}
+<nav>
+  <!-- navigation tabs for logged-in users -->
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('home', view_mode='admin') }}">Home</a>
+    <a href="{{ url_for('about_me', view_mode='admin') }}">About me</a>
+    <div class="dropdown">
+      <button class="dropbtn">Projects</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('academic', view_mode='admin') }}">Academic</a>
+        <a href="{{ url_for('personal', view_mode='admin') }}">Personal</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Hobbies</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('story_writing', view_mode='admin') }}">Story Writing</a>
+        <a href="{{ url_for('exploring_the_outdoor', view_mode='admin') }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('game_development', view_mode='admin') }}">Game Development</a>
+      </div>
+    </div>
+    <a href="{{ url_for('contact', view_mode='admin') }}">Contact</a>
+    <a href="{{ url_for('contact', view_mode='guest') }}">Guest View</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+  </div>
+</nav>
+{% endif %}
+{% else %}
+<nav>
+  <div class="topnav" id="myTopnav">
+    <a href="{{ url_for('home', view_mode=view_mode)}}">Home</a>
+    <a href="{{ url_for('about_me', view_mode=view_mode) }}">About me</a>
+    <div class="dropdown">
+      <button class="dropbtn">Projects</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('academic', view_mode=view_mode) }}">Academic</a>
+        <a href="{{ url_for('personal', view_mode=view_mode) }}">Personal</a>
+      </div>
+    </div>
+    <div class="dropdown">
+      <button class="dropbtn">Hobbies</button>
+      <div class="dropdown-content">
+        <a href="{{ url_for('story_writing', view_mode=view_mode) }}">Story Writing</a>
+        <a href="{{ url_for('exploring_the_outdoor', view_mode=view_mode) }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('game_development', view_mode=view_mode) }}">Game Development</a>
+      </div>
+    </div>
+    <a href="{{ url_for('contact', view_mode=view_mode) }}">Contact</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
+  </div>
+</nav>
+{% endif %} 
+
+<nav>
+<div class="container">
+  <section class="contact-section">
+    <div style="text-align: center;">
+      <h1 style="margin: 4vh;" id="academic_main_title"> Contact Me
+      </h1>
+        <hr style="width:40% ; margin: 2vh auto;" class="w3-opacity">
+    </div>
+    
+    <div class="introduction">
+      <h5 class="w3-padding-16 w3-text-light-grey" id="academic_projects_introduction">
+          You can reach out to me on any of the following:
+      </h5>
+    
+
+      <div class="contact-container">
+        {% for contact in contacts %}
+            <div class="contact-item">
+                {% if contact.type == 'email' %}
+                    <a href="mailto:{{ contact.value }}"><img src="{{ contact.image_path }}" alt="{{ contact.description }}"></a>
+                {% elif contact.type == 'link' %}
+                    <a href="{{ contact.value }}" target="_blank"><img src="{{ contact.image_path }}" alt="{{ contact.description }}"></a>
+                {% endif %}
+            </div>
+        {% endfor %}
+      </div>
+      
+
+  {% if logged_in and view_mode == 'admin' %}
+  <script src="/static/js/new_contact.js"></script>
+
+  <div style="text-align: center;">
+    <h3 style="margin: 4vh;" id="academic_main_title"> Add New Contact
+    </h3>
+  </div>
+
+  <div class="column" id="formContainer">
+    <form id="contactForm" onsubmit="addContact(); return false;">
+      <label for="type">Type:</label>
+      <select id="type" name="type" required>
+        <option value="email">Email</option>
+        <option value="link">Link</option>
+      </select>
+      <label for="value">Value:</label>
+      <input type="text" id="value" name="value" placeholder="Enter email address or link" required>
+      <label for="image">Upload Image</label>
+      <input type="file" id="image" name="image" accept="image/*" required>
+      <input type="submit" name="submit" value="Add">
+    </form>
+  </div>
+
+  
+  
+  <script src="/static/js/delete_contact.js"></script>
+
+  <div style="text-align: center;">
+    <h3 style="margin: 4vh;" id="academic_main_title"> Remove Existing Contact
+  </h3>
+</div>
+<div class="column" id="formContainer">
+  <form id="existing_contactForm">
+    <select id="type" name="type" required>
+      <option value="email">Email</option>
+      <option value="link">Link</option>
+    </select>
+    <label for="del_value">Value:</label>
+    <input type="text" id="del_value" name="del_value" placeholder="Enter email address or link" required>
+    <button type="button" onclick="deleteContact()">Delete Contact</button>
+  </form>
+</div>
+{% endif %}
+</section>
+</div>
+
+</nav>
+
+{% endblock %}
