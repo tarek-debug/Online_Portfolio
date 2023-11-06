@@ -51,30 +51,58 @@ A peek into my creativity and technical ability, this section details the games 
 ### Contact Me
 A simple page with my contact information and social media links, making it easy for potential collaborators, recruiters, or fellow enthusiasts to reach out.
 
-```mermaid
-graph TD
-    Home[/home/] -->|Read/Write| MongoDB[(MongoDB)]
-    GetSentences[/get_sentences/] -->|Read| MongoDB
-    GetCircularData[/get_circular_data/] -->|Read| MongoDB
-    GetProjects[/get_projects/] -->|Read| MongoDB
-    Login[/login/] -->|Read/Write| MongoDB
-    Logout[/logout/] -->|Write| MongoDB
-    AboutMe[/about_me/] -->|Read| MongoDB
-    Academic[/academic/] -->|Read| MongoDB
-    Personal[/personal/] -->|Read| MongoDB
-    StoryWriting[/story_writing/] -->|Read| MongoDB
-    ExploringOutdoor[/exploring_the_outdoor/] -->|Read| MongoDB
-    GameDevelopment[/game_development/] -->|Read| MongoDB
-    Contact[/contact/] -->|Read| MongoDB
-    ImageAttribution[/image_attribution/] -->|Read| MongoDB
 
-    style MongoDB fill:#f96,stroke:#333,stroke-width:2px
-```
 
 
 ## 🏁 Navigating the Portfolio <a name = "navigating_the_portfolio"></a>
 
 The portfolio is built with [HTML, CSS, JavaScript, Python, Flask] and can be accessed through [https://github.com/tarek-debug/Online_Portfolio/].
+
+### Flask-MongoDB Usage:
+- You can access the documentation files for the python codes in the "doc" folder
+- This diagrams helps to illustrate the relation between my website and mongoDB database.
+routes.py:
+```mermaid
+graph TD
+    subgraph Frontend
+    Home[/home/]
+    AboutMe[/about_me/]
+    Academic[/academic/]
+    Personal[/personal/]
+    StoryWriting[/story_writing/]
+    ExploringOutdoor[/exploring_the_outdoor/]
+    GameDevelopment[/game_development/]
+    Contact[/contact/]
+    ImageAttribution[/image_attribution/]
+    end
+
+    subgraph Backend
+    GetSentences[/get_sentences/] 
+    GetCircularData[/get_circular_data/] 
+    GetProjects[/get_projects/] 
+    Login[/login/] 
+    Logout[/logout/] 
+    end
+
+    Home -->|Read/Write| MongoDB[(MongoDB)]
+    GetSentences -->|Read| MongoDB
+    GetCircularData -->|Read| MongoDB
+    GetProjects -->|Read| MongoDB
+    Login -->|Read/Write| MongoDB
+    Logout -->|Write| MongoDB
+    AboutMe -->|Read| MongoDB
+    Academic -->|Read| MongoDB
+    Personal -->|Read| MongoDB
+    StoryWriting -->|Read| MongoDB
+    ExploringOutdoor -->|Read| MongoDB
+    GameDevelopment -->|Read| MongoDB
+    Contact -->|Read| MongoDB
+    ImageAttribution -->|Read| MongoDB
+
+    style MongoDB fill:#f96,stroke:#333,stroke-width:2px
+
+```
+edit_pages.py:
 
 
 ### Prerequisites
