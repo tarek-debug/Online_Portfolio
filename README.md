@@ -43,7 +43,7 @@ A detailed exhibition of my coding journey, with projects ranging from simple sc
 An anthology of my written works, showcasing my talent in crafting engaging narratives. Here, you can find short stories, serialized fiction, and insights into my writing process.
 
 ### Outdoor Exploration
-A photo journal of my adventures in the great outdoors. This section includes pictures, route maps, and reflections on my treks, climbs, and various escapades into nature.
+This section includes a interactive map to show that locations in nature that I explored and ones that I want to do so in the future.
 
 ### Game Development
 A peek into my creativity and technical ability, this section details the games I've developed, including design documents, code snippets, and playable demos.
@@ -72,6 +72,7 @@ git clone https://github.com/tarek-debug/Online_Portfolio.git
 - [Flask](https://flask.palletsprojects.com/en/3.0.x/) - Server Framework
 - [NodeJs](https://nodejs.org/en/) - Server Environment
 - [Amazon AWS EC2](https://aws.amazon.com/ec2/) - Deployment
+- [Leaflet](https://leafletjs.com/) - Interactive Map
 
 The application is deployed on an Amazon AWS EC2 instance, ensuring high availability and scalability. EC2's flexible and secure environment supports the Flask application, allowing for efficient management of traffic and resources.
 
