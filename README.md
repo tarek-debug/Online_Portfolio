@@ -51,12 +51,31 @@ A peek into my creativity and technical ability, this section details the games 
 ### Contact Me
 A simple page with my contact information and social media links, making it easy for potential collaborators, recruiters, or fellow enthusiasts to reach out.
 
+```mermaid
+graph TD
+    Home[/home/] -->|Read/Write| MongoDB[(MongoDB)]
+    GetSentences[/get_sentences/] -->|Read| MongoDB
+    GetCircularData[/get_circular_data/] -->|Read| MongoDB
+    GetProjects[/get_projects/] -->|Read| MongoDB
+    Login[/login/] -->|Read/Write| MongoDB
+    Logout[/logout/] -->|Write| MongoDB
+    AboutMe[/about_me/] -->|Read| MongoDB
+    Academic[/academic/] -->|Read| MongoDB
+    Personal[/personal/] -->|Read| MongoDB
+    StoryWriting[/story_writing/] -->|Read| MongoDB
+    ExploringOutdoor[/exploring_the_outdoor/] -->|Read| MongoDB
+    GameDevelopment[/game_development/] -->|Read| MongoDB
+    Contact[/contact/] -->|Read| MongoDB
+    ImageAttribution[/image_attribution/] -->|Read| MongoDB
 
+    style MongoDB fill:#f96,stroke:#333,stroke-width:2px
+```
 
 
 ## 🏁 Navigating the Portfolio <a name = "navigating_the_portfolio"></a>
 
 The portfolio is built with [HTML, CSS, JavaScript, Python, Flask] and can be accessed through [https://github.com/tarek-debug/Online_Portfolio/].
+
 
 ### Prerequisites
 
