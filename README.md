@@ -105,39 +105,70 @@ graph TD
 edit_pages.py:
 
 ```mermaid
-graph LR
-    subgraph Endpoints
-        AddOrUpdateSentence(Add/Update Sentence) -->|Write| DB[(MongoDB)]
-        DeleteSentence(Delete Sentence) -->|Write| DB
-        AddBar(Add Bar) -->|Write| DB
-        EditBar(Edit Bar) -->|Write| DB
-        RemoveBar(Remove Bar) -->|Write| DB
-        EditAbout(Edit About) -->|Write| DB
-        EditAboutMePhoto(Edit About Me Photo) -->|Write| DB
-        EditResume(Edit Resume) -->|Write| DB
-        DownloadResume(Download Resume) -->|Read| DB
-        EditAcademicTable(Edit Academic Table) -->|Write| DB
-        EditPersonalTable(Edit Personal Table) -->|Write| DB
-        EditStoryWritingTable(Edit Story Writing Table) -->|Write| DB
-        EditGameDevTable(Edit Game Dev Table) -->|Write| DB
-        EditHome(Edit Home) -->|Write| DB
-        NewContact(New Contact) -->|Write| DB
-        DeleteContact(Delete Contact) -->|Write| DB
-        EditPersonalProjects(Edit Personal Projects) -->|Write| DB
-        EditAcademicPageText(Edit Academic Page Text) -->|Write| DB
-        EditPersonalProjectsPageText(Edit Personal Projects Page Text) -->|Write| DB
-        EditGameDevPageText(Edit Game Dev Page Text) -->|Write| DB
-        EditOutdoorPageText(Edit Outdoor Page Text) -->|Write| DB
-        EditStoriesMainPageText(Edit Stories Main Page Text) -->|Write| DB
-        HandleMapMarker(Handle Map Marker) -->|Write| DB
-        EditImgAttribTable(Edit Img Attrib Table) -->|Write| DB
-        EditAcademicProjectsPages(Edit Academic Projects Pages) -->|Write| DB
-        EditPersonalProjectsPages(Edit Personal Projects Pages) -->|Write| DB
-        EditGameDevMainPages(Edit Game Dev Main Pages) -->|Write| DB
-        EditGamesPages(Edit Games Pages) -->|Write| DB
+graph TD
+    subgraph "About Me Page"
+        EditAbout(Edit About)
+        EditAboutMePhoto(Edit About Me Photo)
+        EditResume(Edit Resume)
+        DownloadResume(Download Resume)
+        EditImgAttribTable(Edit Img Attrib Table)
+    end
+    
+    subgraph "Home Page"
+        EditHome(Edit Home)
+        AddOrUpdateSentence(Add/Update Sentence)
+        DeleteSentence(Delete Sentence)
+        AddBar(Add Bar)
+        EditBar(Edit Bar)
+        RemoveBar(Remove Bar)
     end
 
+    subgraph "Academic Projects Page"
+        EditAcademicTable(Edit Academic Table)
+        EditAcademicPageText(Edit Academic Page Text)
+        EditAcademicProjectsPages(Edit Academic Projects Pages)
+    end
+
+    subgraph "Personal Projects Page"
+        EditPersonalTable(Edit Personal Table)
+        EditPersonalProjects(Edit Personal Projects)
+        EditPersonalProjectsPageText(Edit Personal Projects Page Text)
+        EditPersonalProjectsPages(Edit Personal Projects Pages)
+    end
+
+    subgraph "Story Writing Page"
+        EditStoryWritingTable(Edit Story Writing Table)
+        EditStoriesMainPageText(Edit Stories Main Page Text)
+    end
+
+    subgraph "Game Development Page"
+        EditGameDevTable(Edit Game Dev Table)
+        EditGameDevPageText(Edit Game Dev Page Text)
+        EditGameDevMainPages(Edit Game Dev Main Pages)
+        EditGamesPages(Edit Games Pages)
+    end
+
+    subgraph "Outdoor Page"
+        EditOutdoorPageText(Edit Outdoor Page Text)
+        HandleMapMarker(Handle Map Marker)
+    end
+
+    subgraph "Contact Page"
+        NewContact(New Contact)
+        DeleteContact(Delete Contact)
+    end
+
+    AboutMePage --> DB[(MongoDB)]
+    HomePage --> DB
+    AcademicProjectsPage --> DB
+    PersonalProjectsPage --> DB
+    StoryWritingPage --> DB
+    GameDevelopmentPage --> DB
+    OutdoorPage --> DB
+    ContactPage --> DB
+
     style DB fill:#f96,stroke:#333,stroke-width:2px
+
 
 ```
 
