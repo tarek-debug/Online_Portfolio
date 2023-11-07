@@ -105,69 +105,70 @@ graph TD
 edit_pages.py:
 
 ```mermaid
-graph TD
-    subgraph "About Me Page"
-        EditAbout(Edit About)
-        EditAboutMePhoto(Edit About Me Photo)
-        EditResume(Edit Resume)
-        DownloadResume(Download Resume)
-        EditImgAttribTable(Edit Img Attrib Table)
-    end
-    
-    subgraph "Home Page"
-        EditHome(Edit Home)
-        AddOrUpdateSentence(Add/Update Sentence)
-        DeleteSentence(Delete Sentence)
-        AddBar(Add Bar)
-        EditBar(Edit Bar)
-        RemoveBar(Remove Bar)
+graph TB
+    DB[(MongoDB)] --> AboutMePage
+    DB --> HomePage
+    DB --> AcademicProjectsPage
+    DB --> PersonalProjectsPage
+    DB --> StoryWritingPage
+    DB --> GameDevelopmentPage
+    DB --> OutdoorPage
+    DB --> ContactPage
+
+    subgraph AboutMePage[About Me Page]
+        EditAbout(Edit About) -->|Write| DB
+        EditAboutMePhoto(Edit About Me Photo) -->|Write| DB
+        EditResume(Edit Resume) -->|Write| DB
+        DownloadResume(Download Resume) -->|Read| DB
+        EditImgAttribTable(Edit Img Attrib Table) -->|Write| DB
     end
 
-    subgraph "Academic Projects Page"
-        EditAcademicTable(Edit Academic Table)
-        EditAcademicPageText(Edit Academic Page Text)
-        EditAcademicProjectsPages(Edit Academic Projects Pages)
+    subgraph HomePage[Home Page]
+        EditHome(Edit Home) -->|Write| DB
+        AddOrUpdateSentence(Add/Update Sentence) -->|Write| DB
+        DeleteSentence(Delete Sentence) -->|Write| DB
+        AddBar(Add Bar) -->|Write| DB
+        EditBar(Edit Bar) -->|Write| DB
+        RemoveBar(Remove Bar) -->|Write| DB
     end
 
-    subgraph "Personal Projects Page"
-        EditPersonalTable(Edit Personal Table)
-        EditPersonalProjects(Edit Personal Projects)
-        EditPersonalProjectsPageText(Edit Personal Projects Page Text)
-        EditPersonalProjectsPages(Edit Personal Projects Pages)
+    subgraph AcademicProjectsPage[Academic Projects Page]
+        EditAcademicTable(Edit Academic Table) -->|Write| DB
+        EditAcademicPageText(Edit Academic Page Text) -->|Write| DB
+        EditAcademicProjectsPages(Edit Academic Projects Pages) -->|Write| DB
     end
 
-    subgraph "Story Writing Page"
-        EditStoryWritingTable(Edit Story Writing Table)
-        EditStoriesMainPageText(Edit Stories Main Page Text)
+    subgraph PersonalProjectsPage[Personal Projects Page]
+        EditPersonalTable(Edit Personal Table) -->|Write| DB
+        EditPersonalProjects(Edit Personal Projects) -->|Write| DB
+        EditPersonalProjectsPageText(Edit Personal Projects Page Text) -->|Write| DB
+        EditPersonalProjectsPages(Edit Personal Projects Pages) -->|Write| DB
     end
 
-    subgraph "Game Development Page"
-        EditGameDevTable(Edit Game Dev Table)
-        EditGameDevPageText(Edit Game Dev Page Text)
-        EditGameDevMainPages(Edit Game Dev Main Pages)
-        EditGamesPages(Edit Games Pages)
+    subgraph StoryWritingPage[Story Writing Page]
+        EditStoryWritingTable(Edit Story Writing Table) -->|Write| DB
+        EditStoriesMainPageText(Edit Stories Main Page Text) -->|Write| DB
     end
 
-    subgraph "Outdoor Page"
-        EditOutdoorPageText(Edit Outdoor Page Text)
-        HandleMapMarker(Handle Map Marker)
+    subgraph GameDevelopmentPage[Game Development Page]
+        EditGameDevTable(Edit Game Dev Table) -->|Write| DB
+        EditGameDevPageText(Edit Game Dev Page Text) -->|Write| DB
+        EditGameDevMainPages(Edit Game Dev Main Pages) -->|Write| DB
+        EditGamesPages(Edit Games Pages) -->|Write| DB
     end
 
-    subgraph "Contact Page"
-        NewContact(New Contact)
-        DeleteContact(Delete Contact)
+    subgraph OutdoorPage[Outdoor Page]
+        EditOutdoorPageText(Edit Outdoor Page Text) -->|Write| DB
+        HandleMapMarker(Handle Map Marker) -->|Write| DB
     end
 
-    AboutMePage --> DB[(MongoDB)]
-    HomePage --> DB
-    AcademicProjectsPage --> DB
-    PersonalProjectsPage --> DB
-    StoryWritingPage --> DB
-    GameDevelopmentPage --> DB
-    OutdoorPage --> DB
-    ContactPage --> DB
+    subgraph ContactPage[Contact Page]
+        NewContact(New Contact) -->|Write| DB
+        DeleteContact(Delete Contact) -->|Write| DB
+    end
 
     style DB fill:#f96,stroke:#333,stroke-width:2px
+
 
 
 ```
