@@ -104,6 +104,8 @@ graph TD
 ```
 edit_pages.py:
 
+Overall:
+
 ```mermaid
 graph TB
     DB[(MongoDB)] --> AboutMePage
@@ -114,15 +116,14 @@ graph TB
     DB --> GameDevelopmentPage
     DB --> OutdoorPage
     DB --> ContactPage
+    style DB fill:#f96,stroke:#333,stroke-width:2px
 
-    subgraph AboutMePage[About Me Page]
-        EditAbout(Edit About) -->|Write| DB
-        EditAboutMePhoto(Edit About Me Photo) -->|Write| DB
-        EditResume(Edit Resume) -->|Write| DB
-        DownloadResume(Download Resume) -->|Read| DB
-        EditImgAttribTable(Edit Img Attrib Table) -->|Write| DB
-    end
+```
+Homepage:
 
+```mermaid
+graph TC
+    DB[(MongoDB)] --> HomePage
     subgraph HomePage[Home Page]
         EditHome(Edit Home) -->|Write| DB
         AddOrUpdateSentence(Add/Update Sentence) -->|Write| DB
@@ -131,46 +132,97 @@ graph TB
         EditBar(Edit Bar) -->|Write| DB
         RemoveBar(Remove Bar) -->|Write| DB
     end
+    style DB fill:#f96,stroke:#333,stroke-width:2px
 
+```
+About me Page:
+```mermaid
+graph TD
+    DB[(MongoDB)] --> AboutMePage
+    subgraph AboutMePage[About Me Page]
+        EditAbout(Edit About) -->|Write| DB
+        EditAboutMePhoto(Edit About Me Photo) -->|Write| DB
+        EditResume(Edit Resume) -->|Write| DB
+        DownloadResume(Download Resume) -->|Read| DB
+        EditImgAttribTable(Edit Img Attrib Table) -->|Write| DB
+    end
+    style DB fill:#f96,stroke:#333,stroke-width:2px
+
+
+```
+Academic Projects Page:
+```mermaid
+graph TE
+    DB[(MongoDB)] --> AcademicProjectsPage
     subgraph AcademicProjectsPage[Academic Projects Page]
         EditAcademicTable(Edit Academic Table) -->|Write| DB
         EditAcademicPageText(Edit Academic Page Text) -->|Write| DB
         EditAcademicProjectsPages(Edit Academic Projects Pages) -->|Write| DB
     end
+    style DB fill:#f96,stroke:#333,stroke-width:2px
 
+```
+Personal Projects Page:
+```mermaid
+graph TF
+    DB[(MongoDB)] --> PersonalProjectsPage
     subgraph PersonalProjectsPage[Personal Projects Page]
         EditPersonalTable(Edit Personal Table) -->|Write| DB
         EditPersonalProjects(Edit Personal Projects) -->|Write| DB
         EditPersonalProjectsPageText(Edit Personal Projects Page Text) -->|Write| DB
         EditPersonalProjectsPages(Edit Personal Projects Pages) -->|Write| DB
     end
+    style DB fill:#f96,stroke:#333,stroke-width:2px
 
+```
+Story Writing Page:
+```mermaid
+graph TG
+    DB[(MongoDB)] --> StoryWritingPage
     subgraph StoryWritingPage[Story Writing Page]
         EditStoryWritingTable(Edit Story Writing Table) -->|Write| DB
         EditStoriesMainPageText(Edit Stories Main Page Text) -->|Write| DB
     end
+    style DB fill:#f96,stroke:#333,stroke-width:2px
 
+```
+
+
+Exploring the Out Door Page:
+```mermaid
+graph TH
+    DB[(MongoDB)] --> OutdoorPage
+    subgraph OutdoorPage[Outdoor Page]
+        EditOutdoorPageText(Edit Outdoor Page Text) -->|Write| DB
+        HandleMapMarker(Handle Map Marker) -->|Write| DB
+    end
+    style DB fill:#f96,stroke:#333,stroke-width:2px
+
+```
+Game Development Page:
+```mermaid
+graph TI
+    DB[(MongoDB)] --> GameDevelopmentPage
     subgraph GameDevelopmentPage[Game Development Page]
         EditGameDevTable(Edit Game Dev Table) -->|Write| DB
         EditGameDevPageText(Edit Game Dev Page Text) -->|Write| DB
         EditGameDevMainPages(Edit Game Dev Main Pages) -->|Write| DB
         EditGamesPages(Edit Games Pages) -->|Write| DB
     end
-
-    subgraph OutdoorPage[Outdoor Page]
-        EditOutdoorPageText(Edit Outdoor Page Text) -->|Write| DB
-        HandleMapMarker(Handle Map Marker) -->|Write| DB
-    end
-
-    subgraph ContactPage[Contact Page]
-        NewContact(New Contact) -->|Write| DB
-        DeleteContact(Delete Contact) -->|Write| DB
-    end
-
     style DB fill:#f96,stroke:#333,stroke-width:2px
 
 ```
+Contact Page:
+```mermaid
+graph TL
+    DB[(MongoDB)] --> ContactPage
+   subgraph ContactPage[Contact Page]
+        NewContact(New Contact) -->|Write| DB
+        DeleteContact(Delete Contact) -->|Write| DB
+    end
+    style DB fill:#f96,stroke:#333,stroke-width:2px
 
+```
 ### Prerequisites
 
 The libraries and frameworks needed for this website can be found in requirements.txt
