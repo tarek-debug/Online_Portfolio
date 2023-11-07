@@ -122,7 +122,7 @@ graph TB
 Homepage:
 
 ```mermaid
-graph TC
+graph TB
     DB[(MongoDB)] --> HomePage
     subgraph HomePage[Home Page]
         EditHome(Edit Home) -->|Write| DB
@@ -137,7 +137,7 @@ graph TC
 ```
 About me Page:
 ```mermaid
-graph TD
+graph TB
     DB[(MongoDB)] --> AboutMePage
     subgraph AboutMePage[About Me Page]
         EditAbout(Edit About) -->|Write| DB
@@ -152,7 +152,7 @@ graph TD
 ```
 Academic Projects Page:
 ```mermaid
-graph TE
+graph TB
     DB[(MongoDB)] --> AcademicProjectsPage
     subgraph AcademicProjectsPage[Academic Projects Page]
         EditAcademicTable(Edit Academic Table) -->|Write| DB
@@ -164,7 +164,7 @@ graph TE
 ```
 Personal Projects Page:
 ```mermaid
-graph TF
+graph TB
     DB[(MongoDB)] --> PersonalProjectsPage
     subgraph PersonalProjectsPage[Personal Projects Page]
         EditPersonalTable(Edit Personal Table) -->|Write| DB
@@ -177,7 +177,7 @@ graph TF
 ```
 Story Writing Page:
 ```mermaid
-graph TG
+graph TB
     DB[(MongoDB)] --> StoryWritingPage
     subgraph StoryWritingPage[Story Writing Page]
         EditStoryWritingTable(Edit Story Writing Table) -->|Write| DB
@@ -190,7 +190,7 @@ graph TG
 
 Exploring the Out Door Page:
 ```mermaid
-graph TH
+graph TB
     DB[(MongoDB)] --> OutdoorPage
     subgraph OutdoorPage[Outdoor Page]
         EditOutdoorPageText(Edit Outdoor Page Text) -->|Write| DB
@@ -201,7 +201,7 @@ graph TH
 ```
 Game Development Page:
 ```mermaid
-graph TI
+graph TB
     DB[(MongoDB)] --> GameDevelopmentPage
     subgraph GameDevelopmentPage[Game Development Page]
         EditGameDevTable(Edit Game Dev Table) -->|Write| DB
@@ -214,7 +214,7 @@ graph TI
 ```
 Contact Page:
 ```mermaid
-graph TL
+graph TB
     DB[(MongoDB)] --> ContactPage
    subgraph ContactPage[Contact Page]
         NewContact(New Contact) -->|Write| DB
