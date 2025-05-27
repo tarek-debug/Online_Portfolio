@@ -1,0 +1,58 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Conda environment files
+.env/
+.venv/
+*.env
+*.venv
+*.conda
+*.ipynb_checkpoints
+*.log
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+venv/
+env/
+*.venv/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# C/C++ compiled binaries
+GraphMaker/orca/orca
+KDD19-AnomRank/*.o
+KDD19-AnomRank/*.out
+KDD19-AnomRank/*.so
+KDD19-AnomRank/run.sh
+
+# Output files (Model Outputs, Graphs, Logs)
+Model Outputs/
+datasets/
+logs/
+*.gexf
+*.json
+Model Outputs_1/
+
+# PyTorch & Checkpoints
+*.pth
+*.pt
+*.ckpt
+
+# Build directories
+build/
+dist/
+*.egg-info/
+
+# OS-Specific Files (Mac & Windows)
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Miscellaneous
+*.swp
+*.swo
+*~
