@@ -15,26 +15,26 @@
   <nav>
     <!-- navigation tabs for logged-in users -->
     <div class="topnav" id="myTopnav">
-      <a href="{{ url_for('home', view_mode='guest') }}">Home</a>
-      <a href="{{ url_for('about_me', view_mode='guest') }}">About me</a>
+      <a href="{{ url_for('main.home', view_mode='guest') }}">Home</a>
+      <a href="{{ url_for('main.about_me', view_mode='guest') }}">About me</a>
       <div class="dropdown">
         <button class="dropbtn">Projects</button>
         <div class="dropdown-content">
-          <a href="{{ url_for('academic', view_mode='guest') }}">Academic</a>
-          <a href="{{ url_for('personal', view_mode='guest') }}">Personal</a>
+          <a href="{{ url_for('main.academic', view_mode='guest') }}">Academic</a>
+          <a href="{{ url_for('main.personal', view_mode='guest') }}">Personal</a>
         </div>
       </div>
       <div class="dropdown">
         <button class="dropbtn">Hobbies</button>
         <div class="dropdown-content">
-          <a href="{{ url_for('story_writing', view_mode='guest') }}">Story Writing</a>
-          <a href="{{ url_for('exploring_the_outdoor', view_mode='guest') }}">Exploring The Outdoor</a>
-          <a href="{{ url_for('game_development', view_mode='guest') }}">Game Development</a>
+          <a href="{{ url_for('main.story_writing', view_mode='guest') }}">Story Writing</a>
+          <a href="{{ url_for('main.exploring_the_outdoor', view_mode='guest') }}">Exploring The Outdoor</a>
+          <a href="{{ url_for('main.game_development', view_mode='guest') }}">Game Development</a>
         </div>
       </div>
-      <a href="{{ url_for('contact', view_mode='guest') }}">Contact</a>
-      <a href="{{ url_for('image_attribution', view_mode='admin') }}">Admin View</a>
-      <a href="{{ url_for('logout') }}">Logout</a>
+      <a href="{{ url_for('main.contact', view_mode='guest') }}">Contact</a>
+      <a href="{{ url_for('main.image_attribution', view_mode='admin') }}">Admin View</a>
+      <a href="{{ url_for('main.logout') }}">Logout</a>
       <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
 
     </div>
@@ -43,26 +43,26 @@
 <nav>
   <!-- navigation tabs for logged-in users -->
   <div class="topnav" id="myTopnav">
-    <a href="{{ url_for('home', view_mode='admin') }}">Home</a>
-    <a href="{{ url_for('about_me', view_mode='admin') }}">About me</a>
+    <a href="{{ url_for('main.home', view_mode='admin') }}">Home</a>
+    <a href="{{ url_for('main.about_me', view_mode='admin') }}">About me</a>
     <div class="dropdown">
       <button class="dropbtn">Projects</button>
       <div class="dropdown-content">
-        <a href="{{ url_for('academic', view_mode='admin') }}">Academic</a>
-        <a href="{{ url_for('personal', view_mode='admin') }}">Personal</a>
+        <a href="{{ url_for('main.academic', view_mode='admin') }}">Academic</a>
+        <a href="{{ url_for('main.personal', view_mode='admin') }}">Personal</a>
       </div>
     </div>
     <div class="dropdown">
       <button class="dropbtn">Hobbies</button>
       <div class="dropdown-content">
-        <a href="{{ url_for('story_writing', view_mode='admin') }}">Story Writing</a>
-        <a href="{{ url_for('exploring_the_outdoor', view_mode='admin') }}">Exploring The Outdoor</a>
-        <a href="{{ url_for('game_development', view_mode='admin') }}">Game Development</a>
+        <a href="{{ url_for('main.story_writing', view_mode='admin') }}">Story Writing</a>
+        <a href="{{ url_for('main.exploring_the_outdoor', view_mode='admin') }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('main.game_development', view_mode='admin') }}">Game Development</a>
       </div>
     </div>
-    <a href="{{ url_for('contact', view_mode='admin') }}">Contact</a>
-    <a href="{{ url_for('image_attribution', view_mode='guest') }}">Guest View</a>
-    <a href="{{ url_for('logout') }}">Logout</a>
+    <a href="{{ url_for('main.contact', view_mode='admin') }}">Contact</a>
+    <a href="{{ url_for('main.image_attribution', view_mode='guest') }}">Guest View</a>
+    <a href="{{ url_for('main.logout') }}">Logout</a>
     <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
   </div>
 </nav>
@@ -70,28 +70,28 @@
 {% else %}
 <nav>
   <div class="topnav" id="myTopnav">
-    <a href="{{ url_for('home', view_mode=view_mode)}}">Home</a>
-    <a href="{{ url_for('about_me', view_mode=view_mode) }}">About me</a>
+    <a href="{{ url_for('main.home', view_mode=view_mode)}}">Home</a>
+    <a href="{{ url_for('main.about_me', view_mode=view_mode) }}">About me</a>
     <div class="dropdown">
       <button class="dropbtn">Projects</button>
       <div class="dropdown-content">
-        <a href="{{ url_for('academic', view_mode=view_mode) }}">Academic</a>
-        <a href="{{ url_for('personal', view_mode=view_mode) }}">Personal</a>
+        <a href="{{ url_for('main.academic', view_mode=view_mode) }}">Academic</a>
+        <a href="{{ url_for('main.personal', view_mode=view_mode) }}">Personal</a>
       </div>
     </div>
     <div class="dropdown">
       <button class="dropbtn">Hobbies</button>
       <div class="dropdown-content">
-        <a href="{{ url_for('story_writing', view_mode=view_mode) }}">Story Writing</a>
-        <a href="{{ url_for('exploring_the_outdoor', view_mode=view_mode) }}">Exploring The Outdoor</a>
-        <a href="{{ url_for('game_development', view_mode=view_mode) }}">Game Development</a>
+        <a href="{{ url_for('main.story_writing', view_mode=view_mode) }}">Story Writing</a>
+        <a href="{{ url_for('main.exploring_the_outdoor', view_mode=view_mode) }}">Exploring The Outdoor</a>
+        <a href="{{ url_for('main.game_development', view_mode=view_mode) }}">Game Development</a>
       </div>
     </div>
-    <a href="{{ url_for('contact', view_mode=view_mode) }}">Contact</a>
+    <a href="{{ url_for('main.contact', view_mode=view_mode) }}">Contact</a>
     <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="toggleView()">&#9776;</a>
   </div>
   <p style="color: black;">You are not logged in.</p>
-  <a href="{{ url_for('login') }}" style="color: black;">Login</a>
+  <a href="{{ url_for('main.login') }}" style="color: black;">Login</a>
 </nav>
 {% endif %} 
 
@@ -186,7 +186,7 @@
                 <script src = "static/js/academic_table.js"></script>
                 <div id="table_list_container"></div>
 
-                <script src="{{ url_for('static', filename='js/sort_table.js') }}"></script>       
+                <script src="{{ url_for('main.static', filename='js/sort_table.js') }}"></script>       
                           <div id="table-myTable"></div>
                 <script src = "static/js/academic_table.js"></script>
             <div id="tableContainer"></div>
