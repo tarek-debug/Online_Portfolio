@@ -1,0 +1,47 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<!-- Meta and assets -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/about_me.css') }}">
+<div id="vanta-bg"></div>
+
+<!-- Content container -->
+<div id="vanta-content">
+  <nav>
+    <div class="topnav" id="myTopnav">
+      <a href="{{ url_for('main.home', view_mode='guest') }}">Home</a>
+      <a href="{{ url_for('main.about_me', view_mode='guest') }}">About Me</a>
+      <div class="dropdown">
+        <button class="dropbtn">Projects</button>
+        <div class="dropdown-content">
+          <a href="{{ url_for('main.academic', view_mode='guest') }}">Academic</a>
+          <a href="{{ url_for('main.personal', view_mode='guest') }}">Personal</a>
+        </div>
+      </div>
+      <div class="dropdown">
+        <button class="dropbtn">Hobbies</button>
+        <div class="dropdown-content">
+          <a href="{{ url_for('main.story_writing', view_mode='guest') }}">Story Writing</a>
+          <a href="{{ url_for('main.exploring_the_outdoor', view_mode='guest') }}">Exploring The Outdoor</a>
+          <a href="{{ url_for('main.game_development', view_mode='guest') }}">Game Development</a>
+        </div>
+      </div>
+      <a href="{{ url_for('main.contact', view_mode='guest') }}">Contact</a>
+      <a href="javascript:void(0);" class="icon" onclick="toggleView()">&#9776;</a>
+    </div>
+  </nav>
+
+  <div class="container-about">
+    <header class="header-about">
+      <div class="header-overlay"></div>
+      <h1>404 - Page Not Found</h1>
+      <p style="color: #fff; text-align: center;">The page you’re looking for doesn’t exist or has been moved.</p>
+      <div style="text-align: center; margin-top: 30px;">
+        <a href="{{ url_for('main.home', view_mode='guest') }}" class="btn-resume">
+          <i class="fa fa-home"></i> Back to Home
+        </a>
+      </div>
+    </header>
+  </div>
+</div>
+{% endblock %}
