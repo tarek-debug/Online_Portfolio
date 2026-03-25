@@ -20,7 +20,7 @@
     <br> 
 </p>
 
-## 📝 Table of Contents
+## Table of Contents
 
 - [About](#about)
 - [Navigating the Portfolio](#navigating_the_portfolio)
@@ -30,7 +30,7 @@
 - [Authors](#authors)
 - [Acknowledgments](#acknowledgement)
 
-## 🧐 About <a name = "about"></a>
+## About <a name = "about"></a>
 The portfolio is divided into several sections:
 
 ### Home
@@ -241,25 +241,25 @@ git clone https://github.com/tarek-debug/Online_Portfolio.git
 
 The application is deployed on an Amazon AWS EC2 instance, ensuring high availability and scalability. EC2's flexible and secure environment supports the Flask application, allowing for efficient management of traffic and resources.
 
-## 🚀 Deployment <a name = "deployment"></a>
+## Deployment <a name = "deployment"></a>
 
 The portfolio website is deployed on an Amazon AWS EC2 instance which provides a reliable and scalable cloud computing capacity. The deployment process involves setting up the EC2 instance, configuring the security groups, installing the necessary software stack, and launching the Flask application to serve the portfolio to users worldwide. Detailed steps for deployment can be found in the DEPLOYMENT.md file.
 
-## 📄 License <a name = "license"></a>
+##  License <a name = "license"></a>
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details.
 
-## 📈 Contributing <a name = "contributing"></a>
+##  Contributing <a name = "contributing"></a>
 
 Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 Please refer to the [CONTRIBUTING.md](../CONTRIBUTING.md) file for detailed instructions on how to contribute, code of conduct, and the process for submitting pull requests to us.
 
-## ✍️ Authors <a name = "authors"></a>
+## Authors <a name = "authors"></a>
 
 - [@tarek_solamy](https://github.com/tarek-debug) - Idea & Initial work
 
-## 🎉 Acknowledgements <a name = "acknowledgement"></a>
+## Acknowledgements <a name = "acknowledgement"></a>
 
 - Hat tip to anyone whose code was used
 - Inspiration
