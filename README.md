@@ -56,7 +56,7 @@ A simple page with my contact information and social media links, making it easy
 
 ## Navigating the Portfolio <a name = "navigating_the_portfolio"></a>
 
-The portfolio is built with [HTML, CSS, JavaScript, Python, Flask] and can be accessed through [https://github.com/tarek-debug/Online_Portfolio/].
+The portfolio is built with [HTML, CSS, JavaScript, Python, Flask].
 
 ### Flask-MongoDB Usage:
 - You can access the documentation files for the python codes in the "doc" folder
